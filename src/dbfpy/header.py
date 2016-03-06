@@ -23,7 +23,6 @@ __all__ = ["DbfHeader"]
 import cStringIO
 import datetime
 import struct
-import time
 
 import fields
 from utils import getDate

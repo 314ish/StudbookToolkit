@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 """DBF accessing helpers.
 
-FIXME: more documentation needed
+FIXME: more docs needed
 
 Examples:
 
@@ -50,7 +50,7 @@ Examples:
 17-dec-2005 [yc]    split to several modules; reimplemented
 13-dec-2005 [yc]    adapted to the changes of the `strutil` module.
 13-sep-2002 [als]   support FoxPro Timestamp datatype
-15-nov-1999 [jjk]   documentation updates, add demo
+15-nov-1999 [jjk]   docs updates, add demo
 24-aug-1998 [jjk]   add some encodeValue methods (not tested), other tweaks
 08-jun-1998 [jjk]   fix problems, add more features
 20-feb-1998 [jjk]   fix problems, add more features
@@ -143,7 +143,7 @@ class Dbf(object):
             self.memo = memo.MemoFile(memoFile, readOnly=readOnly, new=new)
         elif self.header.hasMemoField:
             self.memo = memo.MemoFile(memo.MemoFile.memoFileName(self.name),
-                readOnly=readOnly, new=new)
+                                      readOnly=readOnly, new=new)
         else:
             self.memo = None
         self.header.setMemoFile(self.memo)

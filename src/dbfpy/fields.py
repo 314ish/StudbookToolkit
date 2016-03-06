@@ -36,8 +36,9 @@ import datetime
 import struct
 import sys
 
-from memo import MemoData
 import utils
+from memo import MemoData
+
 
 ## abstract definitions
 
@@ -131,7 +132,7 @@ class DbfFieldDef(object):
         assert len(string) == 32
         _length = ord(string[16])
         return cls(utils.unzfill(string)[:11], _length, ord(string[17]),
-            start, start + _length, ignoreErrors=ignoreErrors)
+                   start, start + _length, ignoreErrors=ignoreErrors)
     fromString = classmethod(fromString)
 
     def toString(self):

@@ -1,16 +1,25 @@
 from openpyxl import Workbook
 from openpyxl import load_workbook
 
-
+"""Test1()"""
 class excelWriter:
-
+    """Test1()"""
     def __init__(self, name):
+        """
+
+        :rtype: object
+        """
         self.wb = Workbook()
         self.ws = self.wb.active
         self.name = name
 
     # studbook must be studbook type (duh)
     def writeStudbook(self, studbook):
+        """
+
+        :rtype: object
+        :param studbook:
+        """
         self.writeMultipleRows(studbook.header)
 
         for record in studbook.directory:
@@ -26,7 +35,7 @@ class excelWriter:
         self.ws.append(data)
 
     def close(self):
-        self.wb.save(self.name+".xlsx")
+        self.wb.save(self.name)
 
 
 class excelReader:
