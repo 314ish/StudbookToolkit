@@ -18,7 +18,9 @@ import os
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # docs root, use os.path.abspath to make it absolute, like shown here.
-sys.path.insert(0, os.path.abspath('../../src/'))
+sys.path.insert(0, '/Users/Goose/PycharmProjects/GTT/GTT/')
+sys.path.insert(0, os.path.abspath("../../GTT/"))
+# sys.path.insert(0, os.path.abspath('../../GTT/'))
 # -- General configuration ------------------------------------------------
 
 # If your docs needs a minimal Sphinx version, state it here.
@@ -87,7 +89,7 @@ exclude_patterns = ['_build']
 
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
-#add_module_names = True
+add_module_names = True
 
 # If true, sectionauthor and moduleauthor directives will be shown in the
 # output. They are ignored by default.
@@ -110,7 +112,7 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the docs for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
