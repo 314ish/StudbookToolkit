@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/PycharmProjects/GTT/.idea/GTT.iml" filepath="$USER_HOME$/PycharmProjects/GTT/.idea/GTT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/GTT.iml" filepath="$PROJECT_DIR$/.idea/GTT.iml" />
     </modules>
   </component>
 </project>
