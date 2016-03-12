@@ -9,10 +9,7 @@ Welcome to GTT's documentation!!
 Contents:
 
 .. toctree::
-   :maxdepth: 20
-
-
-
+   :maxdepth: 2
 
 Indices and tables
 ==================
