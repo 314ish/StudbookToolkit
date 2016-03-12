@@ -1,12 +1,12 @@
-'''
+"""
 Created on 27  2013
 
 @author:
-'''
+"""
+
 import sparks as sparks
 import excel as ew
 import studBookStruct as sb
-
 
 
 excelPairs = ew.excelReader("testData/2016_pairs.xlsx")
@@ -25,9 +25,8 @@ for move in movesSparks.getRecordsAsList():
     if returnValue is not "ADDED":
         print "ERROR, could not add this move ("+str(returnValue)+")"
 
-
 for sire, dam in excelPairs.getRecordsAsList():
-    myStudbook.addChickRecord(sire,dam)
+    myStudbook.addChickRecord(sire, dam)
 
 myExcel.writeStudbook(myStudbook)
 
