@@ -8,10 +8,10 @@ import excel as ew
 import studBookStruct as sb
 
 
-excelPairs = ew.excelReader("testData/2016_pairs.xlsx")
+excelPairs = ew.ExcelReader("testData/2016_pairs.xlsx")
 exchangeSparks = sparks.SPARKSReader("testData/EXCHANGE.DBF")
 movesSparks = sparks.SPARKSReader("testData/MOVES.DBF")
-myExcel = ew.excelWriter("testData/test_excel_data.xlsx")
+myExcel = ew.ExcelWriter("testData/test_excel_data.xlsx")
 
 myStudbook = sb.studbook()
 myStudbook.addHeader(exchangeSparks.fieldNames)
@@ -27,7 +27,7 @@ for move in movesSparks.getRecordsAsList():
 for sire, dam in excelPairs.getRecordsAsList():
     myStudbook.addChickRecord(sire, dam)
 
-myExcel.writeStudbook(myStudbook)
+myExcel.write_studbook(myStudbook)
 
 myExcel.close()
 

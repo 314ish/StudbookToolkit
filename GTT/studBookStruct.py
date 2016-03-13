@@ -261,9 +261,9 @@ class _StudbookRecord:
         self.myMoves.append(move)
 
     def returnExcelFormat(self):
-        """return a list that is formatted for output to excelWriter. This is
+        """return a list that is formatted for output to ExcelWriter. This is
         the wrong way to go about it of course, this object should just output
-        data and the onus should be on excelWriter to format it however but
+        data and the onus should be on ExcelWriter to format it however but
         that's where we are today
 
         Returns:
