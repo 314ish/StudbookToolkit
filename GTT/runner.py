@@ -1,7 +1,6 @@
 """
-Created on 27  2013
-
-@author:
+This module is a general example using test data showing usage of sparks, excel
+and studbookStruct.
 """
 
 import sparks as sparks
