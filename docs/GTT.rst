@@ -17,14 +17,6 @@ GTT.excel module
     :undoc-members:
     :show-inheritance:
 
-GTT.runner module
------------------
-
-.. automodule:: GTT.runner
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 GTT.studBookStruct module
 -------------------------
 
