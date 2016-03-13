@@ -13,19 +13,19 @@ exchangeSparks = sparks.SPARKSReader("testData/EXCHANGE.DBF")
 movesSparks = sparks.SPARKSReader("testData/MOVES.DBF")
 myExcel = ew.ExcelWriter("testData/test_excel_data.xlsx")
 
-myStudbook = sb.studbook()
-myStudbook.addHeader(exchangeSparks.fieldNames)
-myStudbook.addHeader(movesSparks.fieldNames)
-myStudbook.addRecordsFromList(exchangeSparks.getRecordsAsList())
+myStudbook = sb.Studbook()
+myStudbook.add_header(exchangeSparks.fieldNames)
+myStudbook.add_header(movesSparks.fieldNames)
+myStudbook.add_records_from_list(exchangeSparks.get_records_as_list())
 
 
-for move in movesSparks.getRecordsAsList():
-    returnValue = myStudbook.addMove(move)
+for move in movesSparks.get_records_as_list():
+    returnValue = myStudbook.add_move(move)
     if returnValue is not "ADDED":
         print "ERROR, could not add this move ("+str(returnValue)+")"
 
 for sire, dam in excelPairs.getRecordsAsList():
-    myStudbook.addChickRecord(sire, dam)
+    myStudbook.add_chick_record(sire, dam)
 
 myExcel.write_studbook(myStudbook)
 

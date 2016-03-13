@@ -24,10 +24,10 @@ class ExcelWriter:
         self.name = name
 
     def write_studbook(self, studbook):
-        """write the entire contents from a studbook: into this object.
+        """write the entire contents from a Studbook: into this object.
 
         Args:
-           studbook (studbook):  studbook: to be written to this object
+           studbook (Studbook):  Studbook: to be written to this object
 
         Returns:
             nothing
@@ -36,7 +36,7 @@ class ExcelWriter:
         self._write_multiple_rows(studbook.header)
 
         for record in studbook.directory:
-            self._write_multiple_rows(record.returnExcelFormat())
+            self._write_multiple_rows(record.return_excel_format())
 
     def _write_multiple_rows(self, data):
         """append multiple rows into this object from a python list
@@ -103,14 +103,14 @@ class ExcelReader:
            returnMe (list):
         """
 
-        return_this = []
+        return_me = []
         i = 2
         while i <= len(self.sheet_ranges.rows):
             sire = self.sheet_ranges['B'+str(i)].value
             dam = self.sheet_ranges['C'+str(i)].value
             sd = [sire, dam]
-            return_this.append(sd)
+            return_me.append(sd)
             i += 1
 
-        return return_this
+        return return_me
 

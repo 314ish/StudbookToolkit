@@ -12,7 +12,7 @@ class SPARKSReader:
     """
 
     def __init__(self, filename):
-        """Initialize an excelReader: object.
+        """Initialize an ExcelReader: object.
 
         Args:
            filename (str):  name of the file to read from
@@ -24,7 +24,7 @@ class SPARKSReader:
         self.db = dbf.Dbf(filename)
         self.fieldNames = self.db.fieldNames
 
-    def getRecordsAsList(self):
+    def get_records_as_list(self):
         """read all records from this file into a (2-dimensional) list. Each
         element of the list is list representing an entire row of data. In
         each internal list each element is a single column.

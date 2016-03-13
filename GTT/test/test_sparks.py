@@ -19,7 +19,7 @@ class TestSparksModule(unittest.TestCase):
 
     def test_read_all_lines(self):
         sp = sparks.SPARKSReader(self.testFile)
-        self.assertEqual(len(sp.getRecordsAsList()), self.recordsInTestFile)
+        self.assertEqual(len(sp.get_records_as_list()), self.recordsInTestFile)
 
 if __name__ == '__main__':
     unittest.main()
