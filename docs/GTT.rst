@@ -19,7 +19,7 @@ GTT.excel module
 
 GTT.runner module
 -----------------
- 
+
 .. automodule:: GTT.runner
     :members:
     :undoc-members:
