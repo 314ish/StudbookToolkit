@@ -273,7 +273,6 @@ class _StudbookRecord:
         return_me.append(row)
 
         # now get all the 'moves' rows
-        row = []
         for move in self.myMoves:
             return_me.append(move)
 
