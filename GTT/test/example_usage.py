@@ -11,7 +11,7 @@ import studBookStruct as sb
 excelPairs = ew.excelReader("testData/2016_pairs.xlsx")
 exchangeSparks = sparks.SPARKSReader("testData/EXCHANGE.DBF")
 movesSparks = sparks.SPARKSReader("testData/MOVES.DBF")
-myExcel = ew.excelWriter("testData/test.xlsx")
+myExcel = ew.excelWriter("testData/test_excel_data.xlsx")
 
 myStudbook = sb.studbook()
 myStudbook.addHeader(exchangeSparks.fieldNames)
