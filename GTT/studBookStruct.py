@@ -22,7 +22,6 @@ class Studbook:
         self.directory = []
         self.header = []
 
-    # assuming each entry in the list is a complete record, add all the records to the Studbook
     def add_records_from_list(self, list_of_records):
         """Read in a list of records and add them all to this object
 
@@ -37,9 +36,8 @@ class Studbook:
         for record in list_of_records:
             sbr = _StudbookRecord()
             sbr.populate_all_data(record)
-            self.add_record(sbr)
+            self.add_complete_record(sbr)
 
-    # add a single record to the Studbook based on template chick data (and provided $sire & $dam)
     def add_chick_record(self, sire, dam):
         """append a single record to this object based on a template chick data and input variables
 
@@ -53,10 +51,9 @@ class Studbook:
         """
         sbr = _StudbookRecord()
         sbr.populate_new_chick_data(dam, sire)
-        self.add_record(sbr)
+        self.add_complete_record(sbr)
 
-    # add a single record of type studbookRecord
-    def add_record(self, record):
+    def add_complete_record(self, record):
         """append a single record to this object
 
         Args:

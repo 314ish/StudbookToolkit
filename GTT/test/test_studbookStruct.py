@@ -1,21 +1,27 @@
 import unittest
-
+import studBookStruct
 
 class TestStringMethods(unittest.TestCase):
 
-    def test_upper(self):
-        self.assertEqual('foo'.upper(), 'FOO')
+    def test_create_studbook(self):
+        sb = studBookStruct.Studbook()
+        self.assertIsInstance(sb, studBookStruct.Studbook)
 
-    def test_isupper(self):
-        self.assertTrue('FOO'.isupper())
-        self.assertFalse('Foo'.isupper())
+    def test_add_records_from_list(self):
+        self.assertTrue(True)
 
-    def test_split(self):
-        s = 'hello world'
-        self.assertEqual(s.split(), ['hello', 'world'])
-        # check that s.split fails when the separator is not a string
-        with self.assertRaises(TypeError):
-            s.split(2)
+    def test_add_chick_record(self):
+        self.assertTrue(True)
+
+    def test_add_complete_record(self):
+        self.assertTrue(True)
+
+    def test_add_move(self):
+        self.assertTrue(True)
+
+    def test_add_header(self):
+        self.assertTrue(True)
+
 
 if __name__ == '__main__':
     unittest.main()
