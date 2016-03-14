@@ -84,9 +84,9 @@ class Studbook:
            PRESENT (str): means something
         """
 
-        mSTUD_ID = move[0]
+        my_stud_id = move[0]
         for record in self.directory:
-            if record.data['STUD_ID'] == mSTUD_ID:
+            if record.data['STUD_ID'] == my_stud_id:
                 return_value = record.has_move(move)
                 if return_value == -1:
                     record.add_move(move)
@@ -128,43 +128,44 @@ class _StudbookRecord:
 
         # default data used below s what a theoretical chick would end up needing. We currently assume that
         # a real animal will be COMPLETELY filled out when added
+        # noinspection SpellCheckingInspection
         self.data = OrderedDict([
                     ('STUD_ID', ''),
                     ('DAM_ID', ''),
                     ('SIRE_ID', ''),
-                    ('BDATE', datetime.today().date()),
+                    ('BDATE', ''),
                     ('BIRTH_EST', ''),
-                    ('SEX', 5),
+                    ('SEX', ''),
                     ('ID', ''),
                     ('DID', ''),
                     ('SID', ''),
-                    ('DATEIN', datetime.today().date()),
+                    ('DATEIN', ''),
                     ('IN_EST', ''),
                     ('DATEOUT', ''),
                     ('OUT_EST', ''),
                     ('DEATHDATE', ''),
                     ('DEATH_EST', ''),
-                    ('LOCATION', 'CHICK'),
+                    ('LOCATION', ''),
                     ('LOCAL_ID', ''),
                     ('INSTCODE', ''),
                     ('SOCIALGRP', ''),
-                    ('SELECTED', 'TRUE'),
-                    ('DEAD', 'FALSE'),
+                    ('SELECTED', ''),
+                    ('DEAD', ''),
                     ('DAM_ID_TMP', ''),
                     ('SIRE_IDTMP', ''),
-                    ('INBREED', 0),
-                    ('AGE', 0),
-                    ('KNOWN', -1),
-                    ('INBREED_KN', -1),
-                    ('MK', -1),
-                    ('MK_KN', -1),
-                    ('KV', -1),
-                    ('KV_KN', -1),
-                    ('VX', -1),
-                    ('GU_ALL', -1),
-                    ('GU_DESC', -1),
-                    ('PR_LOST', 0),
-                    ('COMMENT', '2016_HYPO_CHICK')
+                    ('INBREED', ''),
+                    ('AGE', ''),
+                    ('KNOWN', ''),
+                    ('INBREED_KN', ''),
+                    ('MK', ''),
+                    ('MK_KN', ''),
+                    ('KV', ''),
+                    ('KV_KN', ''),
+                    ('VX', ''),
+                    ('GU_ALL', ''),
+                    ('GU_DESC', ''),
+                    ('PR_LOST', ''),
+                    ('COMMENT', '')
                     ])
 
     def populate_all_data(self, input_list):
@@ -190,16 +191,16 @@ class _StudbookRecord:
 
         self.created = True
 
-    def populate_new_chick_data(self, DAM_ID, SIRE_ID):
+    def populate_new_chick_data(self, dam_id, sire_id):
         """given a dam and sire (maw & paw) fill out this record with what the
         chick would be. We're currently really only using default values for a
         chick and adding the DAM and SIRE, not a lot of math is going on here
         to guess what a chick should 'be'
 
         Args:
-           DAM_ID (str):  identifier of the DAM
+           dam_id (str):  identifier of the DAM
 
-           SIRE_ID (str): identifier of the SIRE
+           sire_id (str): identifier of the SIRE
 
         Returns:
            nothing
@@ -208,9 +209,30 @@ class _StudbookRecord:
         if self.created:
             print "ERROR, Trying to re-assign the values for this record (this is way bad!)"
 
-        self.data['DAM_ID'] = DAM_ID
-        self.data['SIRE_ID'] = SIRE_ID
-        self.data['STUD_ID'] = "H"+str(DAM_ID)+"_16"
+        self.data['DAM_ID'] = dam_id
+        self.data['SIRE_ID'] = sire_id
+        self.data['STUD_ID'] = "H"+str(dam_id) + "_16"
+
+        # default data
+        self.data['BDATE'] = datetime.today().date()
+        self.data['SEX'] = 5
+        self.data['DATEIN'] = datetime.today().date()
+        self.data['LOCATION'] = 'CHICK'
+        self.data['SELECTED'] = 'TRUE'
+        self.data['DEAD'] = 'FALSE'
+        self.data['INBREED'] = 0
+        self.data['AGE'] = 0
+        self.data['KNOWN'] = -1
+        self.data['INBREED_KN'] = -1
+        self.data['MK'] = -1
+        self.data['MK_KN'] = -1
+        self.data['KV'] = -1
+        self.data['KV_KN'] = -1
+        self.data['VX'] = -1
+        self.data['GU_ALL'] = -1
+        self.data['GU_DESC'] = -1
+        self.data['PR_LOST'] = 0
+        self.data['COMMENT'] = '2016_HYPO_CHICK'
 
         self.created = True
 
