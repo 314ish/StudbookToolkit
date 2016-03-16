@@ -1,5 +1,4 @@
-from collections import OrderedDict
-from datetime import *
+import datetime
 
 
 class Studbook:
@@ -20,65 +19,22 @@ class Studbook:
         """
         self.numberOfRecords = 0
         self.directory = []
+        self.has_header = False
         self.header = []
-
-    def add_records_from_list(self, list_of_records):
-        """Read in a list of records and add them all to this object
-
-        Args:
-           list_of_records (list):  Each element of the list is a list
-           representing an entire row of data. In each internal list each
-           element is a single column.
-
-        Returns:
-           nothing
-        """
-        for record in list_of_records:
-            sbr = _StudbookRecord()
-            sbr.populate_all_data(record)
-            self.add_complete_record(sbr)
-
-    def add_chick_record(self, sire, dam):
-        """append a single record to this object based on a template chick data and input variables
-
-        Args:
-           sire (str): name of the sire to be considered (FIXME: check that these are supposed to be string/names)
-
-           dam (str): name of the dam to be considered (FIXME: check that these are supposed to be string/names)
-
-        Returns:
-           nothing
-        """
-        sbr = _StudbookRecord()
-        sbr.populate_new_chick_data(dam, sire)
-        self.add_complete_record(sbr)
-
-    def add_complete_record(self, record):
-        """append a single record to this object
-
-        Args:
-           record (_StudbookRecord): object to add to this object
-
-        Returns:
-           nothing
-        """
-        if isinstance(record, _StudbookRecord):
-            self.directory.append(record)
-        else:
-            print "ERROR: records can only be of type studbookRecord!"
 
     # assume that $move is (a list) a move line from Moves.dbf
     # return "ADDED" if it was added, "PRESENT" if already there, "FAIL" otherwise
     def add_move(self, move):
-        """dunno
+        """moves are an attribute of a studbook record. For convenience, we
+        combine a few tasks to add a move to a record
 
         Args:
-           move (list): dunno
+           move (list): each element in the list must contain a list containing a move record
 
         Returns:
-           ADDED (str): means something
-           FAIL (str): means something
-           PRESENT (str): means something
+           ADDED (str): a record was found that matched the move and the move was added to it
+           FAIL (str): no record was found that matched the move
+           PRESENT (str): a record was found that matched the move but the move was already present
         """
 
         my_stud_id = move[0]
@@ -92,26 +48,118 @@ class Studbook:
                     return "PRESENT @ index", str(return_value)
         return "FAIL"
 
-    # headers are a simple list (to be printed 1-entry per row)
-    def add_header(self, data):
-        """ headers are, for now, data that is known to be needed at the top of
-        an excel file or DBF file. this needs to be generalized since those two
-        things are not the only data-types in the world but that is where we
-        are for now.
+    def add_records_from_list(self, list_of_records):
+        """Read in a list of records and add them all to this object
 
         Args:
-           data (list):  each element of the list represents a single column of
-           data (in excel). This variable represents a single row of data
-           (again, in excel)
+           list_of_records (list):  Each element of the list is a list
+           representing an entire row of data. In each internal list each
+           element is a single column.
 
         Returns:
            nothing
         """
 
-        self.header.append(data)
+        if not self.has_header:
+            print "you have to add a header before you can do any population of data!"
+            return
+
+        for record in list_of_records:
+            sbr = StudbookRecord()
+            sbr.set_metadata(self.header)
+            sbr.populate_all_data(record, self.header)
+            self.add_complete_record(sbr)
+
+    def add_chick_record(self, sire, dam):
+        """append a single record to this object based on a template chick data and input variables
+
+        Args:
+           sire (str): name of the sire to be considered (FIXME: check that these are supposed to be string/names)
+
+           dam (str): name of the dam to be considered (FIXME: check that these are supposed to be string/names)
+
+        Returns:
+           nothing
+        """
+
+        if not self.has_header:
+            print "you have to add a header before you can do any population of data!"
+            return
+
+        sbr = StudbookRecord()
+        sbr.set_metadata(self.header)
+        sbr.populate_new_chick_data(dam, sire)
+        self.add_complete_record(sbr)
+
+    def add_complete_record(self, record):
+        """append a single record to this object
+
+        Args:
+           record (StudbookRecord): object to add to this object
+
+        Returns:
+           nothing
+        """
+
+        if not self.has_header:
+            print "you have to add a header before you can do any population of data!"
+            return
+
+        if isinstance(record, StudbookRecord):
+            self.directory.append(record)
+        else:
+            print "ERROR: records can only be of type studbookRecord!"
+
+    def get_record(self, index):
+        """return the record with the given index
+
+        Args:
+           index (int)
+
+        Returns:
+            StudbookRecord
+        """
+        return self.directory[index]
+
+    def get_index_of_record(self, stud_id):
+        """find the record that matches the input argument using the unique key
+        `for the animal known as the 'stud_id'
+
+        Args:
+           stud_id (int): the stud_id of the animal to find.
+
+        Returns:
+            int: return the index of the (first) record that matches the input
+            argument. If no match return -1
+        """
+        counter = 0
+        for record in self.directory:
+            if record.data['STUD_ID'] == stud_id:
+                return counter
+            counter += 1
+        return -1
+
+    def add_header(self, data):
+        """ headers are the basic data validation object for studbooks. every
+        studbookRecord must conform to header standards.
+
+        Args:
+           data (list):  each element in the list represents a single type of
+           data. any records added to this studbook will contain data for each
+           field of the header
+
+        Returns:
+           nothing
+        """
+
+        if self.has_header:
+            print "ERROR: what the heck, we already have a header in this studbook!"
+        else:
+            self.header = data
+            self.has_header = True
 
 
-class _StudbookRecord:
+class StudbookRecord:
     """These objects are the internal records inside Studbook: objects. These
     objects should not be needed to be used directly by translators and can be
     considered internal/private objects
@@ -122,57 +170,33 @@ class _StudbookRecord:
 
         self.created = False
         self.myMoves = []
+        self.metadata = []
+        self.data = {}
 
-        # default data used below s what a theoretical chick would end up needing. We currently assume that
-        # a real animal will be COMPLETELY filled out when added
-        # noinspection SpellCheckingInspection
-        self.data = OrderedDict([
-                    ('STUD_ID', ''),
-                    ('DAM_ID', ''),
-                    ('SIRE_ID', ''),
-                    ('BDATE', ''),
-                    ('BIRTH_EST', ''),
-                    ('SEX', ''),
-                    ('ID', ''),
-                    ('DID', ''),
-                    ('SID', ''),
-                    ('DATEIN', ''),
-                    ('IN_EST', ''),
-                    ('DATEOUT', ''),
-                    ('OUT_EST', ''),
-                    ('DEATHDATE', ''),
-                    ('DEATH_EST', ''),
-                    ('LOCATION', ''),
-                    ('LOCAL_ID', ''),
-                    ('INSTCODE', ''),
-                    ('SOCIALGRP', ''),
-                    ('SELECTED', ''),
-                    ('DEAD', ''),
-                    ('DAM_ID_TMP', ''),
-                    ('SIRE_IDTMP', ''),
-                    ('INBREED', ''),
-                    ('AGE', ''),
-                    ('KNOWN', ''),
-                    ('INBREED_KN', ''),
-                    ('MK', ''),
-                    ('MK_KN', ''),
-                    ('KV', ''),
-                    ('KV_KN', ''),
-                    ('VX', ''),
-                    ('GU_ALL', ''),
-                    ('GU_DESC', ''),
-                    ('PR_LOST', ''),
-                    ('COMMENT', '')
-                    ])
+    def set_metadata(self, metadata):
+        """populate all metadata fields with data from input argument
+        Args:
+           metadata (list):  each element of this list represents a data
+           element for this record. All elements will be initialized to be
+           empty strings
 
-    def populate_all_data(self, input_list):
-        """given list: input, populate all internal data with the list. This
-        function is EXTREMELY dependant on the data being in the right order
-        in the input list. Currently no data validation of any kind is going on
-        USE AT YOUR OWN RISK.
+        Returns:
+           nothing
+        """
+        for field in metadata:
+            self.data[field] = ''
+        self.metadata = metadata
+
+    def populate_all_data(self, input_list, input_types):
+        """given list: input_list, populate all internal data with the list.
+        This is super dangerous as we're not really doing any checking
+        TODO: fix error checking!
 
         Args:
-           input_list (list):  each element of this list represents an internal data element of studbookRecord:
+           input_list (list):  each element of this list represents an internal
+           data element of studbookRecord:
+           input_types (list): each element of this list represents the type of
+           field corresponding to the same location in input_list:
 
         Returns:
            nothing
@@ -182,7 +206,7 @@ class _StudbookRecord:
             print "ERROR, Trying to re-assign the values for this record (this is way bad!)"
 
         i = 0
-        for key in self.data.keys():
+        for key in input_types:
             self.data[key] = input_list[i]
             i += 1
 
@@ -273,26 +297,50 @@ class _StudbookRecord:
 
         self.myMoves.append(move)
 
-    def return_excel_format(self):
-        """return a list that is formatted for output to ExcelWriter. This is
-        the wrong way to go about it of course, this object should just output
-        data and the onus should be on ExcelWriter to format it however but
-        that's where we are today
+    def get_record(self):
+        """return all data from the record as a dictionary
 
         Returns:
-           list:
+           dictionary:
         """
+        return self.data
 
-        return_me = []
 
-        # first, get the 'main' row of data
-        row = []
-        for key in self.data.keys():
-            row.append(self.data[key])
-        return_me.append(row)
-
-        # now get all the 'moves' rows
-        for move in self.myMoves:
-            return_me.append(move)
-
-        return return_me
+        # self.data = OrderedDict([
+        #             ('STUD_ID', ''),
+        #             ('DAM_ID', ''),
+        #             ('SIRE_ID', ''),
+        #             ('BDATE', ''),
+        #             ('BIRTH_EST', ''),
+        #             ('SEX', ''),
+        #             ('ID', ''),
+        #             ('DID', ''),
+        #             ('SID', ''),
+        #             ('DATEIN', ''),
+        #             ('IN_EST', ''),
+        #             ('DATEOUT', ''),
+        #             ('OUT_EST', ''),
+        #             ('DEATHDATE', ''),
+        #             ('DEATH_EST', ''),
+        #             ('LOCATION', ''),
+        #             ('LOCAL_ID', ''),
+        #             ('INSTCODE', ''),
+        #             ('SOCIALGRP', ''),
+        #             ('SELECTED', ''),
+        #             ('DEAD', ''),
+        #             ('DAM_ID_TMP', ''),
+        #             ('SIRE_IDTMP', ''),
+        #             ('INBREED', ''),
+        #             ('AGE', ''),
+        #             ('KNOWN', ''),
+        #             ('INBREED_KN', ''),
+        #             ('MK', ''),
+        #             ('MK_KN', ''),
+        #             ('KV', ''),
+        #             ('KV_KN', ''),
+        #             ('VX', ''),
+        #             ('GU_ALL', ''),
+        #             ('GU_DESC', ''),
+        #             ('PR_LOST', ''),
+        #             ('COMMENT', '')
+        #             ])

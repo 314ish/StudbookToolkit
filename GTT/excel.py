@@ -33,10 +33,10 @@ class ExcelWriter:
             nothing
         """
 
-        self._write_multiple_rows(studbook.header)
+        self.ws.append(studbook.header)
 
         for record in studbook.directory:
-            self._write_multiple_rows(record.return_excel_format())
+            self._write_row(record.get_record(), studbook.header)
 
     def _write_multiple_rows(self, data):
         """append multiple rows into this object from a python list
@@ -52,17 +52,22 @@ class ExcelWriter:
             self._write_row(row)
 
     # data must be a simple list
-    def _write_row(self, data):
-        """append a single row into this object
+    def _write_row(self, data, fields):
+        """add a single studbookRecord into this object using the fields
+         argument to identify which data should be included
 
         Args:
-           data (list):  each element of data: represents a single column of data to be written
+           data (dict):  a dictionary with all possible elements
+           fields (list): a list of keys in the data dictionary to write (in-order)
 
         Returns:
             nothing
         """
+        write_me = []
+        for key in fields:
+            write_me.append(data[key])
 
-        self.ws.append(data)
+        self.ws.append(write_me)
 
     def close(self):
         """save all the data from this object into an Excel file. This may be

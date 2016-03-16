@@ -22,7 +22,16 @@ class SPARKSReader:
         """
 
         self.db = dbf.Dbf(filename)
-        self.fieldNames = self.db.fieldNames
+
+    def get_header_as_list(self):
+        """return header/metadata as a python list.
+
+        Returns:
+           list: a list with each element representing a single element of data
+           sort of excel formatter
+        """
+
+        return self.db.fieldNames
 
     def get_records_as_list(self):
         """read all records from this file into a (2-dimensional) list. Each
