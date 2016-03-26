@@ -21,7 +21,7 @@ class SPARKSReader:
            SPARKSReader:
         """
 
-        self.db = dbf.Dbf(filename)
+        self.db = dbf.Table(filename)
 
     def get_header_as_list(self):
         """return header/metadata as a python list.
@@ -31,7 +31,7 @@ class SPARKSReader:
            sort of excel formatter
         """
 
-        return self.db.fieldNames
+        return self.db.field_names
 
     def get_records_as_list(self):
         """read all records from this file into a (2-dimensional) list. Each
