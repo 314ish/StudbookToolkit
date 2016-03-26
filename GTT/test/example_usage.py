@@ -14,7 +14,8 @@ TEST_DATA_DIR = os.path.join(TEST_DIR, 'testData')
 # my_sparks_reader = SPARKS.SPARKSReader("test/testData/test_sparks_data.dbf")
 moves_data = os.path.join(TEST_DATA_DIR, 'test_moves_data.dbf')
 my_sparks_reader = SPARKS.SPARKSReader(moves_data)
-my_excel_writer = ew.ExcelWriter("test/testData/test_excel_write.xlsx")
+excel_write = os.path.join(TEST_DATA_DIR, 'test_excel_write.xlsx')
+my_excel_writer = ew.ExcelWriter(excel_write)
 
 my_studbook = studBookStruct.Studbook()
 
