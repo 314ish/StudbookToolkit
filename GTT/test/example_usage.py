@@ -3,12 +3,12 @@ This module is a general example using test data showing usage of sparks, excel
 and the studbook structure.
 """
 
-from GTT import sparks
+from GTT import SPARKS
 from GTT import excel as ew
 from GTT import studBookStruct
 
-# my_sparks_reader = sparks.SPARKSReader("test/testData/test_sparks_data.dbf")
-my_sparks_reader = sparks.SPARKSReader("test/testData/test_moves_data.dbf")
+# my_sparks_reader = SPARKS.SPARKSReader("test/testData/test_sparks_data.dbf")
+my_sparks_reader = SPARKS.SPARKSReader("test/testData/test_moves_data.dbf")
 my_excel_writer = ew.ExcelWriter("test/testData/test_excel_write.xlsx")
 
 my_studbook = studBookStruct.Studbook()
