@@ -41,6 +41,4 @@ htmlcov
 docs/_build
 
 # virtualenv
-include/
-local/
 venv/
