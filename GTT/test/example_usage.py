@@ -3,9 +3,9 @@ This module is a general example using test data showing usage of sparks, excel
 and the studbook structure.
 """
 
-import sparks as sparks
-import excel as ew
-import studBookStruct
+from GTT import sparks
+from GTT import excel as ew
+from GTT import studBookStruct
 
 # my_sparks_reader = sparks.SPARKSReader("test/testData/test_sparks_data.dbf")
 my_sparks_reader = sparks.SPARKSReader("test/testData/test_moves_data.dbf")
