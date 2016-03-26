@@ -1,4 +1,4 @@
-from
+from dbf import ver_2 as dbf
 
 
 class SPARKSReader:
