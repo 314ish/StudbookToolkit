@@ -19,7 +19,7 @@ class TestExcelModule(unittest.TestCase):
 
     # def test_write_excel_record(self):
     #     ew = excel.ExcelWriter("testWriter")
-    #     # TODO: fill this test out
+    #     # TODO.md: fill this test out
 
     def test_create_excel_reader(self):
         ew = excel.ExcelReader(self.testFile)
