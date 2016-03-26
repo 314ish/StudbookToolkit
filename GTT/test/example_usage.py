@@ -17,6 +17,6 @@ my_studbook.add_header(my_sparks_reader.get_header_as_list())
 my_studbook.add_records_from_list(my_sparks_reader.get_records_as_list())
 
 my_excel_writer.write_studbook(my_studbook)
-# my_excel_writer.close()
+my_excel_writer.close()
 
 
