@@ -1,4 +1,4 @@
-from dbf import ver_2 as dbf
+from dbfread import DBF
 
 
 class SPARKSReader:
@@ -21,7 +21,7 @@ class SPARKSReader:
            SPARKSReader:
         """
 
-        self.db = dbf.Table(filename)
+        self.db = DBF(filename)
 
     def get_header_as_list(self):
         """return header/metadata as a python list.
@@ -44,5 +44,5 @@ class SPARKSReader:
 
         return_me = []
         for record in self.db:
-            return_me.append(record.fieldData)
+            return_me.append(record.values())
         return return_me
